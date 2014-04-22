@@ -1,0 +1,175 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>co.codewizards.android</groupId>
+	<artifactId>co.codewizards.android</artifactId>
+	<version>4.0.0-m2</version>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>../co.codewizards.android.dex</module>
+		<module>../co.codewizards.android.jdo</module>
+		<module>../co.codewizards.android.datanucleus.core</module>
+		<module>../co.codewizards.android.datanucleus.core.dex</module>
+		<module>../co.codewizards.android.datanucleus.rdbms</module>
+		<module>../co.codewizards.android.datanucleus.rdbms.dex</module>
+		<module>../co.codewizards.android.datanucleus.jdo</module>
+		<module>../co.codewizards.android.datanucleus.jdo.dex</module>
+	</modules>
+
+	<properties>
+		<jdo-api.version>3.1-rc1</jdo-api.version>
+		<datanucleus-core.version>4.0.0-m2</datanucleus-core.version>
+		<datanucleus-api-jdo.version>4.0.0-m2</datanucleus-api-jdo.version>
+		<datanucleus-rdbms.version>4.0.0-m2</datanucleus-rdbms.version>
+
+		<!-- Everything is UTF-8 (except for files that are specified differently - e.g. properties) -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<!-- Java version. -->
+		<maven.compiler.source>7</maven.compiler.source>
+		<maven.compiler.target>7</maven.compiler.target>
+
+		<sourceArtifact.groupId>SPECIFY-IN-CHILD</sourceArtifact.groupId>
+		<sourceArtifact.artifactId>SPECIFY-IN-CHILD</sourceArtifact.artifactId>
+		<sourceArtifact.version>SPECIFY-IN-CHILD</sourceArtifact.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- BEGIN co.codewizards.android -->
+			<dependency>
+				<groupId>co.codewizards.android</groupId>
+				<artifactId>co.codewizards.android.jdo</artifactId>
+				<version>${jdo-api.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>co.codewizards.android</groupId>
+				<artifactId>co.codewizards.android.datanucleus.core</artifactId>
+				<version>${datanucleus-core.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>co.codewizards.android</groupId>
+				<artifactId>co.codewizards.android.datanucleus.core.dex</artifactId>
+				<version>${datanucleus-core.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>co.codewizards.android</groupId>
+				<artifactId>co.codewizards.android.datanucleus.rdbms</artifactId>
+				<version>${datanucleus-rdbms.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>co.codewizards.android</groupId>
+				<artifactId>co.codewizards.android.datanucleus.rdbms.dex</artifactId>
+				<version>${datanucleus-rdbms.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>co.codewizards.android</groupId>
+				<artifactId>co.codewizards.android.datanucleus.jdo</artifactId>
+				<version>${datanucleus-api-jdo.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>co.codewizards.android</groupId>
+				<artifactId>co.codewizards.android.datanucleus.jdo.dex</artifactId>
+				<version>${datanucleus-api-jdo.version}</version>
+			</dependency>
+			<!-- END co.codewizards.android -->
+
+			<dependency>
+				<groupId>javax.jdo</groupId>
+				<artifactId>jdo-api</artifactId>
+				<version>${jdo-api.version}</version>
+			</dependency>
+
+			<!-- BEGIN org.datanucleus -->
+			<dependency>
+				<groupId>org.datanucleus</groupId>
+				<artifactId>datanucleus-core</artifactId>
+				<version>${datanucleus-core.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.datanucleus</groupId>
+				<artifactId>datanucleus-rdbms</artifactId>
+				<version>${datanucleus-rdbms.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.datanucleus</groupId>
+				<artifactId>datanucleus-api-jdo</artifactId>
+				<version>${datanucleus-api-jdo.version}</version>
+			</dependency>
+			<!-- END org.datanucleus -->
+
+			<dependency>
+				<groupId>org.apache.geronimo.specs</groupId>
+				<artifactId>geronimo-validation_1.0_spec</artifactId>
+				<version>1.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.transaction</groupId>
+				<artifactId>transaction-api</artifactId>
+				<version>1.1</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-shade-plugin</artifactId>
+					<version>2.2</version>
+					<configuration>
+						<artifactSet>
+							<includes>
+								<include>${sourceArtifact.groupId}:${sourceArtifact.artifactId}</include>
+							</includes>
+						</artifactSet>
+	
+						<relocations>
+							<relocation>
+								<pattern>java.lang.instrument</pattern>
+								<shadedPattern>androidj.lang.instrument</shadedPattern>
+							</relocation>
+							<relocation>
+								<pattern>javax.naming</pattern>
+								<shadedPattern>androidjx.naming</shadedPattern>
+							</relocation>
+							<relocation>
+								<pattern>javax.transaction</pattern>
+								<shadedPattern>androidjx.transaction</shadedPattern>
+							</relocation>
+<!--
+							<relocation>
+								<pattern>javax.sql.XAConnection</pattern>
+								<shadedPattern>androidjx.sql.XAConnection</shadedPattern>
+							</relocation>
+							<relocation>
+								<pattern>javax.sql.XADataSource</pattern>
+								<shadedPattern>androidjx.sql.XADataSource</shadedPattern>
+							</relocation>
+-->
+						</relocations>
+	
+					</configuration>
+					<executions>
+						<execution>
+							<phase>package</phase>
+							<goals>
+								<goal>shade</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>

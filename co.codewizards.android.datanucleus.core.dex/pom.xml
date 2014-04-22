@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>co.codewizards.android.datanucleus.core.dex</artifactId>
+	<version>${datanucleus-core.version}</version>
+	
+	<parent>
+		<groupId>co.codewizards.android</groupId>
+		<artifactId>co.codewizards.android.dex</artifactId>
+		<version>4.0.0-m2</version>
+		<relativePath>../co.codewizards.android.dex</relativePath>
+	</parent>
+
+	<properties>
+		<sourceArtifact.groupId>org.datanucleus</sourceArtifact.groupId>
+		<sourceArtifact.artifactId>datanucleus-core</sourceArtifact.artifactId>
+		<sourceArtifact.version>${datanucleus-core.version}</sourceArtifact.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>co.codewizards.android</groupId>
+			<artifactId>co.codewizards.android.datanucleus.core</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+				<artifactId>android-maven-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

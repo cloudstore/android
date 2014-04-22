@@ -1,0 +1,71 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>co.codewizards.android.jdo</artifactId>
+	<version>${jdo-api.version}</version>
+
+	<parent>
+		<groupId>co.codewizards.android</groupId>
+		<artifactId>co.codewizards.android</artifactId>
+		<version>4.0.0-m2</version>
+		<relativePath>../co.codewizards.android</relativePath>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax.jdo</groupId>
+			<artifactId>jdo-api</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.transaction</groupId>
+					<artifactId>transaction-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>transaction-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-shade-plugin</artifactId>
+				<configuration>
+					<artifactSet>
+						<includes>
+							<include>*:*</include>
+						</includes>
+						<excludes>
+							<exclude>javax.transaction:*</exclude>
+						</excludes>
+					</artifactSet>
+
+					<relocations>
+						<relocation>
+							<pattern>javax.naming</pattern>
+							<shadedPattern>androidjx.naming</shadedPattern>
+						</relocation>
+						<relocation>
+							<pattern>java.lang.instrument</pattern>
+							<shadedPattern>androidj.lang.instrument</shadedPattern>
+						</relocation>
+					</relocations>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

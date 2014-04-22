@@ -1,0 +1,52 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>co.codewizards.android.datanucleus.jdo</artifactId>
+	<version>${datanucleus-api-jdo.version}</version>
+
+	<parent>
+		<groupId>co.codewizards.android</groupId>
+		<artifactId>co.codewizards.android</artifactId>
+		<version>4.0.0-m2</version>
+		<relativePath>../co.codewizards.android</relativePath>
+	</parent>
+
+	<properties>
+		<sourceArtifact.groupId>org.datanucleus</sourceArtifact.groupId>
+		<sourceArtifact.artifactId>datanucleus-api-jdo</sourceArtifact.artifactId>
+		<sourceArtifact.version>${datanucleus-api-jdo.version}</sourceArtifact.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>co.codewizards.android</groupId>
+			<artifactId>co.codewizards.android.datanucleus.core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>${sourceArtifact.groupId}</groupId>
+			<artifactId>${sourceArtifact.artifactId}</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.jdo</groupId>
+					<artifactId>jdo-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>co.codewizards.android</groupId>
+			<artifactId>co.codewizards.android.jdo</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-shade-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
