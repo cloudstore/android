@@ -13,20 +13,25 @@
 	</parent>
 
 	<properties>
-		<sourceArtifact.groupId>org.datanucleus</sourceArtifact.groupId>
-		<sourceArtifact.artifactId>datanucleus-core</sourceArtifact.artifactId>
-		<sourceArtifact.version>${datanucleus-core.version}</sourceArtifact.version>
+		<sourceArtifact.groupId>*</sourceArtifact.groupId>
+		<sourceArtifact.artifactId>*</sourceArtifact.artifactId>
+		<sourceArtifact.version>UNUSED</sourceArtifact.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
-			<groupId>${sourceArtifact.groupId}</groupId>
-			<artifactId>${sourceArtifact.artifactId}</artifactId>
+			<groupId>org.datanucleus</groupId>
+			<artifactId>datanucleus-core</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.geronimo.specs</groupId>
 			<artifactId>geronimo-validation_1.0_spec</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>transaction-api</artifactId>
 		</dependency>
 	</dependencies>
 
