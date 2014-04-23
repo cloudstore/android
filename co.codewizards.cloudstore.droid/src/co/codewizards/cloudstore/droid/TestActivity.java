@@ -35,6 +35,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -180,18 +181,15 @@ public class TestActivity extends Activity {
 		// it has to be first copied from asset resource to a storage location.
 
 		final ClassLoader defaultClassLoader = TestActivity.class.getClassLoader();
-
-		final ClassLoader dataNucleusCoreClassLoader = createDexClassLoader(
-				"co.codewizards.android.datanucleus.core.dex-4.0.0-m2.jar", defaultClassLoader);
-
-		final ClassLoader dataNucleusRdbmsClassLoader = createDexClassLoader(
-				"co.codewizards.android.datanucleus.rdbms.dex-4.0.0-m2.jar", dataNucleusCoreClassLoader);
-
-		final ClassLoader dataNucleusJdoClassLoader = createDexClassLoader(
-				"co.codewizards.android.datanucleus.jdo.dex-4.0.0-m2.jar", dataNucleusRdbmsClassLoader);
-
-		Thread.currentThread().setContextClassLoader(dataNucleusJdoClassLoader);
 		
+		final ClassLoader dataNucleusClassLoader = new AssetClassLoader(getApplicationContext(), new String[] {
+			"co.codewizards.android.datanucleus.core.dex-4.0.0-m2.jar",
+			"co.codewizards.android.datanucleus.rdbms.dex-4.0.0-m2.jar",
+			"co.codewizards.android.datanucleus.jdo.dex-4.0.0-m2.jar"
+		}, defaultClassLoader);
+
+		Thread.currentThread().setContextClassLoader(dataNucleusClassLoader);
+
 		final Properties persistenceProperties = new Properties();
 		try {
 			InputStream in = getAssets().open("test-persistence.properties");
@@ -200,37 +198,55 @@ public class TestActivity extends Activity {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-		
-		try {
-//			Class<?> nucleusContextClass = Class.forName("org.datanucleus.PersistenceNucleusContextImpl", true, dataNucleusJdoClassLoader);
-//			Constructor<?> nucleusContextConstructor = nucleusContextClass.getConstructor(String.class, Map.class);
-//			Object nucleusContext = nucleusContextConstructor.newInstance("JDO", persistenceProperties);
-//			System.out.println("*********************************************************************");
-//			System.out.println(nucleusContext);
-//			System.out.println("*********************************************************************");
 
-			Class<?> implClass = Class.forName("org.datanucleus.api.jdo.JDOPersistenceManagerFactory", true, Thread.currentThread().getContextClassLoader());
-            Method m = implClass.getMethod("getPersistenceManagerFactory", Map.class, Map.class);
-            PersistenceManagerFactory pmf = 
-                (PersistenceManagerFactory) m.invoke(
-                    null, new Object[]{new HashMap<>(), persistenceProperties});
+		SQLiteDatabase db = getApplicationContext().openOrCreateDatabase("testDB", Context.MODE_PRIVATE, null);
+		String databasePath = db.getPath();
+		db.close();
+		persistenceProperties.setProperty("javax.jdo.option.ConnectionURL", "jdbc:sqldroid:" + databasePath);
+//		persistenceProperties.setProperty("javax.jdo.option.ConnectionURL", "jdbc:sqlite:" + databasePath);
 
-			System.out.println("*********************************************************************");
-			System.out.println(pmf);
-			System.out.println("*********************************************************************");
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+//		try {
+//			Class<?> implClass = Class.forName("org.datanucleus.api.jdo.JDOPersistenceManagerFactory", true, Thread.currentThread().getContextClassLoader());
+//            Method m = implClass.getMethod("getPersistenceManagerFactory", Map.class, Map.class);
+//            PersistenceManagerFactory pmf = 
+//                (PersistenceManagerFactory) m.invoke(
+//                    null, new Object[]{new HashMap<>(), persistenceProperties});
+//
+//			System.out.println("*********************************************************************");
+//			System.out.println(pmf);
+//			System.out.println("*********************************************************************");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			throw new RuntimeException(e);
+//		}
+
+		final PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(persistenceProperties, Thread.currentThread().getContextClassLoader());
+		System.out.println("*************************************************************************************");
+		System.out.println("*************************************************************************************");
+		System.out.println("*************************************************************************************");
+		System.out.println("*************************************************************************************");
+		System.out.println("*************************************************************************************");
+		System.out.println("*************************************************************************************");
 		
-		final PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(persistenceProperties, dataNucleusJdoClassLoader);
 		final PersistenceManager pm = pmf.getPersistenceManager();
-		pm.getExtent(LocalRepository.class);
+		System.out.println("*************************************************************************************");
+//		pm.getExtent(LocalRepository.class);
+		
+		
 		pm.close();
 		pmf.close();
-	}
-
-	private ClassLoader createDexClassLoader(final String dexJarAssetName, final ClassLoader parentClassLoader) {
-		return new DexJarClassLoader(getApplicationContext(), dexJarAssetName, parentClassLoader);
+		System.out.println("*************************************************************************************");
+		System.out.println("*************************************************************************************");
+		System.out.println("*************************************************************************************");
+		System.out.println("*************************************************************************************");
+		System.out.println("*************************************************************************************");
+		System.out.println("*************************************************************************************");
+		System.out.println("*************************************************************************************");
+		System.out.println("*************************************************************************************");
+		System.out.println("*************************************************************************************");
+		System.out.println("*************************************************************************************");
+		System.out.println("*************************************************************************************");
+		System.out.println("*************************************************************************************");
 	}
 
 	Handler mHideHandler = new Handler();
