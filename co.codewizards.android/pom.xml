@@ -145,7 +145,6 @@
 								<pattern>javax.transaction</pattern>
 								<shadedPattern>androidjx.transaction</shadedPattern>
 							</relocation>
-<!--
 							<relocation>
 								<pattern>javax.sql.XAConnection</pattern>
 								<shadedPattern>androidjx.sql.XAConnection</shadedPattern>
@@ -154,7 +153,6 @@
 								<pattern>javax.sql.XADataSource</pattern>
 								<shadedPattern>androidjx.sql.XADataSource</shadedPattern>
 							</relocation>
--->
 						</relocations>
 	
 					</configuration>

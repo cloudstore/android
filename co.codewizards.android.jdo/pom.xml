@@ -12,22 +12,34 @@
 		<relativePath>../co.codewizards.android</relativePath>
 	</parent>
 
+	<properties>
+		<sourceArtifact.groupId>*</sourceArtifact.groupId>
+		<sourceArtifact.artifactId>*</sourceArtifact.artifactId>
+		<sourceArtifact.version>UNUSED</sourceArtifact.version>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>javax.jdo</groupId>
 			<artifactId>jdo-api</artifactId>
+<!--
 			<exclusions>
 				<exclusion>
 					<groupId>javax.transaction</groupId>
 					<artifactId>transaction-api</artifactId>
 				</exclusion>
 			</exclusions>
+-->
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-validation_1.0_spec</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>javax.transaction</groupId>
 			<artifactId>transaction-api</artifactId>
-			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
@@ -35,35 +47,6 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-shade-plugin</artifactId>
-				<configuration>
-					<artifactSet>
-						<includes>
-							<include>*:*</include>
-						</includes>
-						<excludes>
-							<exclude>javax.transaction:*</exclude>
-						</excludes>
-					</artifactSet>
-
-					<relocations>
-						<relocation>
-							<pattern>javax.naming</pattern>
-							<shadedPattern>androidjx.naming</shadedPattern>
-						</relocation>
-						<relocation>
-							<pattern>java.lang.instrument</pattern>
-							<shadedPattern>androidj.lang.instrument</shadedPattern>
-						</relocation>
-					</relocations>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>

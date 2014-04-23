@@ -13,6 +13,8 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -28,6 +30,7 @@ import org.bouncycastle.crypto.RuntimeCryptoException;
 
 import co.codewizards.cloudstore.core.util.ZipUtil;
 import co.codewizards.cloudstore.droid.util.SystemUiHider;
+import co.codewizards.cloudstore.local.persistence.Directory;
 import co.codewizards.cloudstore.local.persistence.LocalRepository;
 import co.codewizards.cloudstore.local.persistence.NormalFile;
 import dalvik.system.DexClassLoader;
@@ -38,6 +41,7 @@ import android.content.ContextWrapper;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
@@ -181,7 +185,7 @@ public class TestActivity extends Activity {
 		// it has to be first copied from asset resource to a storage location.
 
 		final ClassLoader defaultClassLoader = TestActivity.class.getClassLoader();
-		
+
 		final ClassLoader dataNucleusClassLoader = new AssetClassLoader(getApplicationContext(), new String[] {
 			"co.codewizards.android.datanucleus.core.dex-4.0.0-m2.jar",
 			"co.codewizards.android.datanucleus.rdbms.dex-4.0.0-m2.jar",
@@ -226,13 +230,49 @@ public class TestActivity extends Activity {
 		System.out.println("*************************************************************************************");
 		System.out.println("*************************************************************************************");
 		System.out.println("*************************************************************************************");
+
+//		final String traceFilePath = new File(getDir("trace", MODE_WORLD_READABLE), "trace").getAbsolutePath();
+//		System.out.println("TRACE: " + traceFilePath);
+//		Debug.startMethodTracing(traceFilePath);
+
 		System.out.println("*************************************************************************************");
 		
 		final PersistenceManager pm = pmf.getPersistenceManager();
 		System.out.println("*************************************************************************************");
-//		pm.getExtent(LocalRepository.class);
+		System.out.println("PersistenceManager created!!!");
+		System.out.println("*************************************************************************************");
 		
-		
+		pm.getExtent(LocalRepository.class);
+		System.out.println("*************************************************************************************");
+		System.out.println("Entity LocalRepository initialised!!!");
+		System.out.println("*************************************************************************************");
+
+		LocalRepository localRepository = new LocalRepository();
+		localRepository.setPrivateKey(new byte[10]);
+		localRepository.setPublicKey(new byte[10]);
+		localRepository.setRevision(9);
+		Directory root = new Directory();
+		root.setChanged(new Date());
+		root.setLastModified(new Date());
+		root.setLocalRevision(9);
+		root.setName("/");
+		root.setParent(null);
+		localRepository.setRoot(root);
+		localRepository.setChanged(new Date());
+		pm.makePersistent(localRepository);
+
+		System.out.println("*************************************************************************************");
+		System.out.println("Entity LocalRepository persisted!!!");
+		System.out.println("*************************************************************************************");
+
+		@SuppressWarnings("unchecked")
+		Collection<LocalRepository> localRepositories = (Collection<LocalRepository>) pm.newQuery(LocalRepository.class).execute();
+		System.out.println("*************************************************************************************");
+		System.out.println("Entity LocalRepository queried:");
+		for (LocalRepository localRepository2 : localRepositories) {
+			System.out.println("  * " + localRepository2);
+		}
+
 		pm.close();
 		pmf.close();
 		System.out.println("*************************************************************************************");

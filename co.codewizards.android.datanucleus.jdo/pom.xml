@@ -15,7 +15,7 @@
 	<properties>
 		<sourceArtifact.groupId>org.datanucleus</sourceArtifact.groupId>
 		<sourceArtifact.artifactId>datanucleus-api-jdo</sourceArtifact.artifactId>
-		<sourceArtifact.version>${datanucleus-api-jdo.version}</sourceArtifact.version>
+		<sourceArtifact.version>UNUSED</sourceArtifact.version>
 	</properties>
 
 	<dependencies>
