@@ -33,6 +33,7 @@ import co.codewizards.cloudstore.droid.util.SystemUiHider;
 import co.codewizards.cloudstore.local.persistence.Directory;
 import co.codewizards.cloudstore.local.persistence.LocalRepository;
 import co.codewizards.cloudstore.local.persistence.NormalFile;
+import co.codewizards.cloudstore.local.persistence.TestEntity;
 import dalvik.system.DexClassLoader;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -242,35 +243,53 @@ public class TestActivity extends Activity {
 		System.out.println("PersistenceManager created!!!");
 		System.out.println("*************************************************************************************");
 		
-		pm.getExtent(LocalRepository.class);
+//		pm.getExtent(LocalRepository.class);
+//		System.out.println("*************************************************************************************");
+//		System.out.println("Entity LocalRepository initialised!!!");
+//		System.out.println("*************************************************************************************");
+//
+//		LocalRepository localRepository = new LocalRepository();
+//		localRepository.setPrivateKey(new byte[10]);
+//		localRepository.setPublicKey(new byte[10]);
+//		localRepository.setRevision(9);
+//		Directory root = new Directory();
+//		root.setChanged(new Date());
+//		root.setLastModified(new Date());
+//		root.setLocalRevision(9);
+//		root.setName("/");
+//		root.setParent(null);
+//		localRepository.setRoot(root);
+//		localRepository.setChanged(new Date());
+//		pm.makePersistent(localRepository);
+//
+//		System.out.println("*************************************************************************************");
+//		System.out.println("Entity LocalRepository persisted!!!");
+//		System.out.println("*************************************************************************************");
+//
+//		@SuppressWarnings("unchecked")
+//		Collection<LocalRepository> localRepositories = (Collection<LocalRepository>) pm.newQuery(LocalRepository.class).execute();
+//		System.out.println("*************************************************************************************");
+//		System.out.println("Entity LocalRepository queried:");
+//		for (LocalRepository localRepository2 : localRepositories) {
+//			System.out.println("  * " + localRepository2);
+//		}
+
+		pm.getExtent(TestEntity.class);
 		System.out.println("*************************************************************************************");
-		System.out.println("Entity LocalRepository initialised!!!");
+		System.out.println("Entity TestEntity initialised!!!");
 		System.out.println("*************************************************************************************");
 
-		LocalRepository localRepository = new LocalRepository();
-		localRepository.setPrivateKey(new byte[10]);
-		localRepository.setPublicKey(new byte[10]);
-		localRepository.setRevision(9);
-		Directory root = new Directory();
-		root.setChanged(new Date());
-		root.setLastModified(new Date());
-		root.setLocalRevision(9);
-		root.setName("/");
-		root.setParent(null);
-		localRepository.setRoot(root);
-		localRepository.setChanged(new Date());
-		pm.makePersistent(localRepository);
-
+		pm.makePersistent(new TestEntity(Long.toString(System.currentTimeMillis(), 36)));
 		System.out.println("*************************************************************************************");
-		System.out.println("Entity LocalRepository persisted!!!");
+		System.out.println("Entity TestEntity persisted!!!");
 		System.out.println("*************************************************************************************");
-
+		
 		@SuppressWarnings("unchecked")
-		Collection<LocalRepository> localRepositories = (Collection<LocalRepository>) pm.newQuery(LocalRepository.class).execute();
+		Collection<TestEntity> testEntities = (Collection<TestEntity>) pm.newQuery(TestEntity.class).execute();
 		System.out.println("*************************************************************************************");
-		System.out.println("Entity LocalRepository queried:");
-		for (LocalRepository localRepository2 : localRepositories) {
-			System.out.println("  * " + localRepository2);
+		System.out.println("Entity TestEntity queried:");
+		for (TestEntity te : testEntities) {
+			System.out.println("  * " + te);
 		}
 
 		pm.close();

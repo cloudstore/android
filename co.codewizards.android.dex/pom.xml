@@ -52,7 +52,7 @@
 							</goals>
 							<configuration>
 								<attachJar>false</attachJar>
-								<!-- <dexCoreLibrary>true</dexCoreLibrary> -->
+								<dexCoreLibrary>true</dexCoreLibrary> <!-- Needed for java.awt.Color :-( -->
 							</configuration>
 						</execution>
 					</executions>
