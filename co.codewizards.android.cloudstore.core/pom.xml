@@ -1,0 +1,66 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>co.codewizards.android.cloudstore.core</artifactId>
+	<version>${cloudstore-core.version}</version>
+
+	<parent>
+		<groupId>co.codewizards.android</groupId>
+		<artifactId>co.codewizards.android</artifactId>
+		<version>4.0.0-m2</version>
+		<relativePath>../co.codewizards.android</relativePath>
+	</parent>
+
+	<properties>
+		<sourceArtifact.groupId>co.codewizards.cloudstore</sourceArtifact.groupId>
+		<sourceArtifact.artifactId>co.codewizards.cloudstore.core</sourceArtifact.artifactId>
+		<sourceArtifact.version>UNUSED</sourceArtifact.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>${sourceArtifact.groupId}</groupId>
+			<artifactId>${sourceArtifact.artifactId}</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.datanucleus</groupId>
+					<artifactId>datanucleus-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.datanucleus</groupId>
+					<artifactId>datanucleus-api-jdo</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.datanucleus</groupId>
+					<artifactId>datanucleus-rdbms</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.derby</groupId>
+					<artifactId>derby</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.jdo</groupId>
+					<artifactId>jdo-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.bouncycastle</groupId>
+					<artifactId>bcprov-jdk15on</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-shade-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
