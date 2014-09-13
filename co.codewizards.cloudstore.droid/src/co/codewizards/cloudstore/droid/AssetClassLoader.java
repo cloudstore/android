@@ -33,7 +33,7 @@ public class AssetClassLoader extends DexClassLoader {
 
 	@Override
 	protected URL findResource(String name) {
-		System.out.println("findResource: name=" + name);
+		//System.out.println("findResource: name=" + name);
 		
 		final URL resource = super.findResource(name);
 		return resource;
@@ -41,7 +41,7 @@ public class AssetClassLoader extends DexClassLoader {
 
 	@Override
 	protected Enumeration<URL> findResources(String name) {
-		System.out.println("findResources: name=" + name);
+		//System.out.println("findResources: name=" + name);
 		try {
 			final Enumeration<URL> resources = super.findResources(name);
 			return resources;
